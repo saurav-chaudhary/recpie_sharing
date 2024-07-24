@@ -6,9 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from 'react';
-import Dialog from '@mui/material/Dialog';
-import RecpieForm from './RecpieForm';
+import { Link } from 'react-router-dom';
+
 const StyledFab = styled(Fab)({
   position: 'absolute',
   zIndex: 1,
@@ -18,31 +17,18 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-
 function Footer() {
-    const [open,setOpen] = useState(false)
-
-    const handleClick = ()=>{
-        setOpen(true)
-    }
-    const handleClose = ()=>{
-        setOpen(false)
-    }
-    
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, bgcolor: 'black' }}>
         <Toolbar>
-          <StyledFab color="secondary" aria-label="add" onClick={handleClick}>
+          <StyledFab color="secondary" aria-label="add" component={Link} to="/recpie_form">
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
         </Toolbar>
       </AppBar>
-      <Dialog open={open} onClose={handleClose}>
-        <RecpieForm onClose={handleClose} /> 
-      </Dialog>
     </React.Fragment>
   );
 }
