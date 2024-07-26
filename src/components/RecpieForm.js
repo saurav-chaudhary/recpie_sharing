@@ -7,12 +7,15 @@ import Typography from '@mui/material/Typography';
 import { IoMdAdd } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import IngredientsList from './IngredientsList';
-import { addserving, addtime, addrecpieName, addingridentdata, addingridentname } from '../Store';
+import { addserving, addtime, addrecpieName, addingridentdata, addingridentname, addRecord,clearIngrediant } from '../Store';
 import { Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom'
 
 function RecpieForm() {
+  const navigate  = useNavigate()
   const dispatch = useDispatch();
   const { recpiename, serving, time, ingridentname, ingredintdata } = useSelector((state) => {
+    console.log(state.form.addRecordData);
     return {
       recpiename: state.form.recpieName,
       serving: state.form.serving,
@@ -43,6 +46,22 @@ function RecpieForm() {
 
   const handleIngredintsName = (event) => {
     dispatch(addingridentname(event.target.value));
+  };
+
+  const handleSubmitForm = (event) => {
+    event.preventDefault();
+    dispatch(addRecord({
+      recpieName: recpiename,
+      serving: serving,
+      time: time,
+      ingrident: ingredintdata
+    }));
+    dispatch(addrecpieName(""))
+    dispatch(addtime(""))
+    dispatch(addserving(""))
+    dispatch(clearIngrediant())
+    navigate('/')
+    
   };
 
   const ingredientList = (
@@ -166,8 +185,8 @@ function RecpieForm() {
             size="large"
             variant="contained"
             color="success"
-            type="submit"
             sx={{ marginY: 2, width: '100%', maxWidth: 500 }}
+            onClick={handleSubmitForm}
           >
             Submit
           </Button>

@@ -7,7 +7,7 @@ const formSlice = createSlice({
         serving:0,
         time:0,
         ingrident:[],
-        addRecord:[],
+        addRecordData:[],
         ingridentname:''
     },
     reducers:{
@@ -24,19 +24,22 @@ const formSlice = createSlice({
             state.ingrident.push(action.payload)
         },
         addRecord(state,action){
-            state.addRecord.push({
-                name:state.recpieName,
-                serving:state.serving,
-                time: state.time,
-                ingrident:state.ingrident
+            state.addRecordData.push({
+                name: action.payload.recpieName,
+                serving: action.payload.serving,
+                time: action.payload.time,
+                ingrident: action.payload.ingrident
             })
         },
         addingridentname(state,action){
             state.ingridentname=action.payload
+        },
+        clearIngrediant(state,action){
+            state.ingrident = []
         }
        
     }
 })
 
-export const {addrecpieName,addingrident,addserving,addtime,addingridentdata,addRecord,addingridentname} = formSlice.actions
+export const {addrecpieName,addingrident,addserving,addtime,addingridentdata,addRecord,addingridentname,clearIngrediant} = formSlice.actions
 export const formReducer = formSlice.reducer
