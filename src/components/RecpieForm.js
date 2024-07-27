@@ -7,21 +7,21 @@ import Typography from '@mui/material/Typography';
 import { IoMdAdd } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import IngredientsList from './IngredientsList';
-import { addserving, addtime, addrecpieName, addingridentdata, addingridentname, addRecord,clearIngrediant } from '../Store';
+import { addserving, addtime, addrecpieName, addingridentdata, addingridentname, addRecord, clearIngrediant, addImageUrl } from '../Store';
 import { Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 function RecpieForm() {
-  const navigate  = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { recpiename, serving, time, ingridentname, ingredintdata } = useSelector((state) => {
-    console.log(state.form.addRecordData);
+  const { recpiename, serving, time, ingridentname, ingredintdata, imageUrl } = useSelector((state) => {
     return {
       recpiename: state.form.recpieName,
       serving: state.form.serving,
       time: state.form.time,
       ingridentname: state.form.ingridentname,
-      ingredintdata: state.form.ingrident
+      ingredintdata: state.form.ingrident,
+      imageUrl: state.form.imageUrl
     };
   });
 
@@ -35,6 +35,14 @@ function RecpieForm() {
 
   const handleTime = (event) => {
     dispatch(addtime(event.target.value));
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      dispatch(addImageUrl(imageUrl)); // Update Redux store with image URL
+    }
   };
 
   const handleIngredientsData = () => {
@@ -54,14 +62,15 @@ function RecpieForm() {
       recpieName: recpiename,
       serving: serving,
       time: time,
-      ingrident: ingredintdata
+      ingrident: ingredintdata,
+      imageUrl: imageUrl 
     }));
-    dispatch(addrecpieName(""))
-    dispatch(addtime(""))
-    dispatch(addserving(""))
-    dispatch(clearIngrediant())
-    navigate('/')
-    
+    dispatch(addrecpieName(""));
+    dispatch(addtime(""));
+    dispatch(addserving(""));
+    dispatch(clearIngrediant());
+    dispatch(addImageUrl(""));
+    navigate('/');
   };
 
   const ingredientList = (
@@ -85,6 +94,32 @@ function RecpieForm() {
             padding: 3
           }}
         >
+          <Typography variant="h6">Upload Image</Typography>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ marginBottom: 16 }}
+          />
+
+          {imageUrl && (
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: 500,
+                textAlign: 'center',
+                marginY: 2
+              }}
+            >
+              <Typography variant="h6">Image Preview</Typography>
+              <img
+                src={imageUrl}
+                alt="Preview"
+                style={{ maxWidth: '100%', maxHeight: 300, marginTop: 8 }}
+              />
+            </Box>
+          )}
+
           <TextField
             fullWidth
             label="Recipe Name"

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-
+import { useNavigate } from 'react-router-dom';
 const theme = createTheme({ // <-- Defined custom theme
   palette: {
     primary: {
@@ -18,6 +18,7 @@ const theme = createTheme({ // <-- Defined custom theme
 });
 
 function Navbar() {
+  const navigate = useNavigate()
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -32,6 +33,9 @@ function Navbar() {
       width: 'auto',
     },
   }));
+  const handleClickonrecpie=()=>{
+    navigate('/')
+    }
 
   const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -79,6 +83,7 @@ function Navbar() {
               noWrap
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              onClick={handleClickonrecpie}
             >
               Recpie
             </Typography>
