@@ -10,6 +10,8 @@ import IngredientsList from './IngredientsList';
 import { addserving, addtime, addrecpieName, addingridentdata, addingridentname, addRecord, clearIngrediant, addImageUrl } from '../Store';
 import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { addRecpie } from './fetch';
+
 
 function RecpieForm() {
   const navigate = useNavigate();
@@ -58,6 +60,19 @@ function RecpieForm() {
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
+    const data = {
+      recpieName: recpiename,
+      serving: serving,
+      time: time,
+      ingrident: ingredintdata,
+      imageUrl: imageUrl 
+    }
+    addRecpie(data).then(response => {
+      if (response) {
+          console.log('Success:', response);
+          // Handle success, e.g., update the state, show a success message, etc.
+      }
+  })
     dispatch(addRecord({
       recpieName: recpiename,
       serving: serving,
