@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -7,23 +7,25 @@ import Typography from '@mui/material/Typography';
 import { IoMdAdd } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import IngredientsList from './IngredientsList';
-import { addserving, addtime, addrecpieName, addingridentdata, addingridentname, addRecord, clearIngrediant, addImageUrl } from '../Store';
+import { addserving, addtime, addrecpieName, addingridentdata, addingridentname, addRecord, clearIngrediant, addImageUrl,changeAbout } from '../Store';
 import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { addRecpie } from './fetch';
 
-
 function RecpieForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { recpiename, serving, time, ingridentname, ingredintdata, imageUrl } = useSelector((state) => {
+  const { recpiename, serving, time, ingridentname, ingredintdata, imageUrl,
+    about
+   } = useSelector((state) => {
     return {
       recpiename: state.form.recpieName,
       serving: state.form.serving,
       time: state.form.time,
       ingridentname: state.form.ingridentname,
       ingredintdata: state.form.ingrident,
-      imageUrl: state.form.imageUrl
+      imageUrl: state.form.imageUrl,
+      about: state.form.about
     };
   });
 
@@ -39,11 +41,15 @@ function RecpieForm() {
     dispatch(addtime(event.target.value));
   };
 
+  
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      dispatch(addImageUrl(imageUrl)); // Update Redux store with image URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        dispatch(addImageUrl(reader.result)); 
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -65,21 +71,16 @@ function RecpieForm() {
       serving: serving,
       time: time,
       ingrident: ingredintdata,
-      imageUrl: imageUrl 
+      imageUrl: imageUrl,
+      about:about
     }
     addRecpie(data).then(response => {
       if (response) {
           console.log('Success:', response);
-          // Handle success, e.g., update the state, show a success message, etc.
+         
       }
-  })
-    dispatch(addRecord({
-      recpieName: recpiename,
-      serving: serving,
-      time: time,
-      ingrident: ingredintdata,
-      imageUrl: imageUrl 
-    }));
+    });
+    dispatch(addRecord(data));
     dispatch(addrecpieName(""));
     dispatch(addtime(""));
     dispatch(addserving(""));
@@ -95,6 +96,10 @@ function RecpieForm() {
       ))}
     </Stack>
   );
+
+  const handleAbout = (event)=>{
+    dispatch(changeAbout(event.target.value))
+  }
 
   return (
     <div>
@@ -176,6 +181,19 @@ function RecpieForm() {
               </Grid>
             </Grid>
           </Box>
+          <Box sx={{
+              width: '100%',
+              maxWidth: 500,
+            }}>
+            <TextField
+            fullWidth
+            label="About Recpie"
+            value={about}
+            onChange={handleAbout}
+            variant="outlined"
+            sx={{ maxWidth: 500 }}
+          />
+          </Box>
 
           <Box
             sx={{
@@ -247,3 +265,4 @@ function RecpieForm() {
 }
 
 export default RecpieForm;
+

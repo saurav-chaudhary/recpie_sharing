@@ -9,7 +9,8 @@ const formSlice = createSlice({
     ingrident: [],
     addRecordData: [],
     ingridentname: '',
-    imageUrl: "" // Add imageUrl to the state
+    imageUrl: "" ,
+    about:""
   },
   reducers: {
     addrecpieName(state, action) {
@@ -30,7 +31,7 @@ const formSlice = createSlice({
         serving: action.payload.serving,
         time: action.payload.time,
         ingrident: action.payload.ingrident,
-        imageUrl: action.payload.imageUrl // Include imageUrl in the record
+        imageUrl: action.payload.imageUrl 
       });
     },
     addingridentname(state, action) {
@@ -41,7 +42,11 @@ const formSlice = createSlice({
     },
     addImageUrl(state, action) { 
       state.imageUrl = action.payload;
+    },
+    changeAbout(state,action){
+      state.about = action.payload
     }
+
   }
 });
 
@@ -53,7 +58,8 @@ export const {
   addRecord,
   addingridentname,
   clearIngrediant,
-  addImageUrl 
+  addImageUrl,
+  changeAbout
 } = formSlice.actions;
 
 export const formReducer = formSlice.reducer;

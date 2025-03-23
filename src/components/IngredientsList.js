@@ -7,7 +7,7 @@ function IngredientsList({ ing }) {
   return (
     <Paper elevation={2} sx={{ padding: 2, borderRadius: 2 }}>
       <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-        {/* Icons for edit and delete */}
+        
         <Stack direction="row" spacing={1}>
           <IconButton color="primary" aria-label="edit">
             <EditIcon />

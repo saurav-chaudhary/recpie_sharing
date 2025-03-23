@@ -9,10 +9,10 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
-const theme = createTheme({ // <-- Defined custom theme
+const theme = createTheme({ 
   palette: {
     primary: {
-      main: '#000000', // <-- Set the primary color to black
+      main: '#000000', 
     },
   },
 });
@@ -52,7 +52,7 @@ function Navbar() {
     width: '100%',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
+     
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
       [theme.breakpoints.up('sm')]: {
@@ -65,7 +65,7 @@ function Navbar() {
   }));
 
   return (
-    <ThemeProvider theme={theme}> {/* <-- Wrapped with ThemeProvider */}
+    <ThemeProvider theme={theme}> 
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>

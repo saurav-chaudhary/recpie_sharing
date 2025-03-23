@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import { formReducer,addserving,addtime,addrecpieName,addingridentdata,addRecord,addingridentname,clearIngrediant,addImageUrl } from "./Slice/FormSlice";
+import { formReducer,addserving,addtime,addrecpieName,addingridentdata,addRecord,addingridentname,clearIngrediant,addImageUrl,changeAbout } from "./Slice/FormSlice";
 
 const store = configureStore({
     reducer:{
@@ -9,4 +9,4 @@ const store = configureStore({
 })
 
 console.log(store.getState());
-export {store,addRecord,addserving,addtime,addrecpieName,addingridentdata,addingridentname,clearIngrediant,addImageUrl}
+export {store,addRecord,addserving,addtime,addrecpieName,addingridentdata,addingridentname,clearIngrediant,addImageUrl,changeAbout}

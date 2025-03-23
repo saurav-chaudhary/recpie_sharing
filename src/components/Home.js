@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FoodCard from './FoodCard';
-import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography'; 
 import { Container, Grid } from '@mui/material';
+import { getRecpie } from './fetch'; 
 
 function Home() {
-  
-  const addRecordData = useSelector((state) => state.form.addRecordData || []);
-  
-  
+  const [recipes, setRecipes] = useState([]); 
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getRecpie();
+      
+      if (Array.isArray(data)) { 
+        setRecipes(data);
+      } else {
+        console.error('Data fetched is not an array:', data);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <Container>
-      {addRecordData.length > 0 ? (
+      {recipes.length > 0 ? (  
         <Grid container spacing={2}>
-          {addRecordData.map((item, index) => (
+          {recipes.map((item, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <FoodCard item={item} />
             </Grid>

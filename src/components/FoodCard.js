@@ -14,12 +14,16 @@ function FoodCard({ item }) {
   };
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={item.imageUrl} />
+    <Card style={{ width: '20rem' }}> {/* Adjust the width here */}
+      <Card.Img 
+        variant="top" 
+        src={item.imageUrl} 
+        style={{ height: '200px', objectFit: 'cover' }} // Adjust image size and fit
+      />
       <Card.Body>
-        <Card.Title>{item.name}</Card.Title>
+        <Card.Title>{item.recpieName}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+          {item.about}
         </Card.Text>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-between align-items-center">
