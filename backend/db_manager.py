@@ -7,7 +7,7 @@ class MongoDb:
 
     def connect_to_db(self):
         try:
-            uri = "mongodb://root:password@localhost:27017/"
+            uri = "mongodb://localhost:27017/"
             client = MongoClient(uri)
             print("Database connected successfully")
             return client['recpie']
@@ -19,7 +19,7 @@ class MongoDb:
             return None
 
     def add_repie_data(self, data):
-        if self.db:
+        if self.db is not None:
             try:
                 self.db['recpieRecord'].insert_one(data)
                 print("Data added successfully")
@@ -27,7 +27,7 @@ class MongoDb:
                 print(f"Failed to add data: {e}")
 
     def get_all_repie_from_db(self):
-        if self.db:
+        if self.db is not None:
             try:
                 collection = self.db['recpieRecord'].find({})
                 return [doc for doc in collection]

@@ -19,13 +19,13 @@ def add_recipe():
         # Save image data in MongoDB
         data['image'] = base64.b64decode(image_data.split(',')[1])
     print(data)
-    db_manager.addRepieData(data)
+    db_manager.add_repie_data(data)
 
     return 'Recipe added'
 
 @app.route('/getrecpie',methods=['GET'])
 def getallrecpie():
-    data = db_manager.getallrecpiefromdb()
+    data = db_manager.get_all_repie_from_db()
 
     return json_util.dumps(data)
 
